@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const registerSchema = new mongoose.Schema({
-  name: {
+  first_name: {
+    type: String,
+    required: true,
+  },
+  last_name: {
     type: String,
     required: true,
   },
@@ -10,9 +14,17 @@ const registerSchema = new mongoose.Schema({
     required: true,
   },
   number: {
-    type: String,
+    type: Number,
     required: true,
   },
+  password:{
+    type:Number,
+    required:true
+  },
+  re_password:{
+    type:Number,
+    required:true
+  }
 });
 
 const Register = mongoose.model("register", registerSchema);

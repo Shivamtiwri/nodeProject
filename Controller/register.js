@@ -1,14 +1,34 @@
 const Register = require("../Models/register");
 
 async function register(req, res) {
-  const { name, email, number } = req.body;
-
-  Register.create({ name, email, number })
-    .then((category) => {
-      if (category) {
+  const { first_name, last_name, email, number, password, re_password } =
+    req.body;
+console.log(req.body);
+  Register.findOne({ email: email })
+    .then((result) => {
+      if (result?.email === email) {
         res
-          .status(404)
-          .json({ msg: " Category crated Sueess... !", response_code: 20 });
+          .status(201)
+          .json({ msg: "Email alrady Register... !", response_code: 201 });
+      } else {
+        Register.create({
+          first_name,
+          last_name,
+          email,
+          number,
+          password,
+          re_password,
+        })
+          .then((category) => {
+            if (category) {
+              res
+                .status(200)
+                .json({ msg: " Register Sueess... !", response_code: 200 });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     })
     .catch((err) => {
@@ -16,4 +36,23 @@ async function register(req, res) {
     });
 }
 
-module.exports = { register };
+async function getRegister(req, res) {
+  Register.find()
+    .then((category) => {
+      if (category) {
+        res
+          .status(200)
+          .json({
+            msg: " Register Sueess... !",
+            count:category.length,
+            data: category,
+            response_code: 200,
+          });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+module.exports = { register, getRegister };
