@@ -21,8 +21,6 @@ router.get("/", (req, res) => {
   res.send("App start");
 });
 
-app.use("/.netlify/functions/server", router);
 
-module.exports.handler = Serverless(app);
 
 app.listen(port, () => console.log(`Server started... ! port ${port}`));
